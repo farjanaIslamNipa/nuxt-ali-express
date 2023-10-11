@@ -4,8 +4,7 @@
             <div class="grid xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4">
                 <template v-if="products">
                     <div v-for="product in products" :key="product">
-                        {{ product }}
-                        <!-- <ProductComponent :product="product" /> -->
+                        <ProductComponent :product="product" />
                     </div>
                 </template>
             </div>
