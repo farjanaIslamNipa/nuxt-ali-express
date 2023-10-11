@@ -69,9 +69,9 @@
 import MainLayout from '~/layouts/MainLayout.vue'
 import{ref} from 'vue';
 import {useUserStore} from '~/store/user'
-const route = useRoute();
-
 const userStore = useUserStore()
+
+const route = useRoute();
 
 let currentImage = ref(null)
 
