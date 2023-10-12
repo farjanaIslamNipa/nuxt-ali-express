@@ -74,7 +74,19 @@
             <form @submit.prevent="pay()">
               <div id="card-element" class="border border-gray-500 p-2 rounded-sm" />
               <p id="card-error" role="alert" class="text-red-700 text-center font-semibold" />
+
+              <button :disabled="isProcessing" type="submit" class="mt-4 bg-gradient-to-r from-[#fe630c] to-[#ff3200] w-full text-white text-[21px] font-semibold p-1.5 rounded-full" :class="isProcessing ? 'opacity-70' : 'opacity-100'">
+                <Icon v-if="isProcessing" name="eos-icons:loading" size="" />
+                <div v-else>Place Order</div>
+              </button>
             </form>
+          </div>
+
+          <div class="bg-white rounded-lg p-4 mt-4">
+            <div class="text-lg font-semibold mb-2 mt-2">AliExpress</div>
+            <p class="my-2">
+              AliExpress keeps your information and payment safe
+            </p>
           </div>
         </div>
       </div>
