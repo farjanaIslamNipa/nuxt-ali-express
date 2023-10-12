@@ -37,6 +37,32 @@
             </div>
           </div>
         </div>
+
+        <div class="md:hidden block my-4" />
+          <div class="md:w-[35%]">
+            <div id="Summary" class="bg-white rounded-lg p-4">
+              <div class="text-2xl font-extrabold mb-2">Summary</div>
+              <div class="flex items-center justify-between my-4">
+                <div class="font-semibold">Total</div>
+                <div class="text-2xl font-semibold">
+                  $ <span class="font-extrabold">{{ totalPriceComputed }}</span>
+                </div>
+              </div>
+
+              <button @click="goToCheckout" class="flex items-center justify-center bg-[#FD374F] w-full text-white text-[21px] font-semibold p-1.5 rounded-full mt-4">
+                Checkout
+              </button>
+            </div>
+
+            <div id="PaymentProtection" class="bg-white rounded-lg p-4 mt-4">
+              <div class="text-lg font-semibold mb-2">Payment methods</div>
+              <div class="flex items-center justify-start gap-8 my-4">
+                <div v-for="card in cards" :key="card">
+                  <img class="h-6" :src="card" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
   </MainLayout>
@@ -44,6 +70,31 @@
 
 <script setup>
 import MainLayout from '~/layouts/MainLayout.vue'
+import {useUserStore} from '~/store/user'
+const userStore = useUserStore()
+
+let selectedArray = ref([])
+
+onMounted(() => {
+  setTimeout(() => userStore.isLoading = false, 200)
+})
+
+const cards = ref([
+  'visa.png',
+  'mastercard.png',
+  'paypal.png',
+  'applepay.png'
+])
+
+const totalPriceComputed = computed(() => {
+  let price = 0
+
+  userStore.cart.forEach(prod => {
+    price += prod.price
+  })
+
+  return price / 100
+})
 
 const products = [
     {id: 1, title: "Title 1", description: "This is description", url: "https://picsum.photos/id/70/800/800", price: 9899},
