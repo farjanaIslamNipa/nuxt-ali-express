@@ -50,6 +50,33 @@
             </div>
           </div>
         </div>
+
+        <div class="md:hidden block my-4" />
+
+        <div class="md:w-[35%]">
+          <div id="PlaceOrder" class="bg-white rounded-lg p-4">
+            <div class="text-2xl font-extrabold mb-2">Summary</div>
+
+            <div class="flex items-center justify-between my-4">
+              <div>Total Shipping</div>
+              <div>Free</div>
+            </div>
+
+            <div class="border-t" />
+
+            <div class="flex items-center justify-between my-4">
+              <div class="font-semibold">Total</div>
+              <div class="text-2xl font-semibold">
+                $ <span class="font-extrabold">{{ total/100 }}</span>
+              </div>
+            </div>
+
+            <form @submit.prevent="pay()">
+              <div id="card-element" class="border border-gray-500 p-2 rounded-sm" />
+              <p id="card-error" role="alert" class="text-red-700 text-center font-semibold" />
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </MainLayout>
@@ -99,6 +126,11 @@ const createOrder = async (stripeId) => {
 const showError = async (errorMsgText) => {
 
 }
+
+const products = [
+    {id: 1, title: "Title 1", description: "This is description", url: "https://picsum.photos/id/70/800/800", price: 9899},
+    {id: 2, title: "Title 2", description: "This is description", url: "https://picsum.photos/id/71/800/800", price: 9899}
+]
 </script>
 
 <style scoped>
