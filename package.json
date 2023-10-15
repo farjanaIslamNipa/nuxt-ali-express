@@ -10,7 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "prisma": {
-    "seed": "node prisma/seed.js"
+    "seed": "node prisma/seed.cjs"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
