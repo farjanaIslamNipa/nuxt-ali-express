@@ -5,7 +5,7 @@
         <img width="170" src="/AliExpress-logo.png" alt="">
       </NuxtLink>
     </div>
-
+{{ user }}
     <div class="max-w-[400px] mx-auto px-2">
       <div class="text-center my-6">Login / Register</div>
       <button @click="login('google')" class="flex items-center justify-center gap-3 p-1.5 w-full border hover:bg-gray-100 rounded-full text-lg font-semibold">
