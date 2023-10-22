@@ -5,7 +5,7 @@
         <div class="md:w-[65%]">
           <div class="bg-white rounded-lg p-4">
             <div class="text-xl font-semibold mb-2">Shipping Address</div>
-            <div v-if="true">
+            <div v-if="currentAddress && currentAddress.data">
               <NuxtLink to="/address" class="flex items-center pb-2 text-blue-500 hover:text-red-400">
                 <Icon name="mdi:plus" size="18" class="mr-2" />
                 Update Address
@@ -16,23 +16,23 @@
                 <ul class="text-xs">
                   <li class="flex items-center gap-2">
                     <div>Contact Name:</div>
-                    <div class="font-bold">Test</div>
+                    <div class="font-bold">{{ currentAddress.data.name }}</div>
                   </li>
                   <li class="flex items-center gap-2">
                     <div>Address:</div>
-                    <div class="font-bold">Test</div>
+                    <div class="font-bold">{{ currentAddress.data.address }}</div>
                   </li>
                   <li class="flex items-center gap-2">
                     <div>Zip Code:</div>
-                    <div class="font-bold">Test</div>
+                    <div class="font-bold">{{ currentAddress.data.zipCode }}</div>
                   </li>
                   <li class="flex items-center gap-2">
                     <div>City:</div>
-                    <div class="font-bold">Test</div>
+                    <div class="font-bold">{{ currentAddress.data.city }}</div>
                   </li>
                   <li class="flex items-center gap-2">
                     <div>Country:</div>
-                    <div class="font-bold">Test</div>
+                    <div class="font-bold">{{ currentAddress.data.country }}</div>
                   </li>
                 </ul>
               </div>
@@ -98,6 +98,8 @@
 import MainLayout from '~/layouts/MainLayout.vue'
 import {useUserStore} from '~/store/user'
 const userStore = useUserStore()
+const user = useSupabaseUser()
+const route = useRoute()
 
 let stripe = null
 let elements = null
@@ -107,6 +109,25 @@ let total = ref(0)
 let clientSecret = null
 let currentAddress = ref(null)
 let isProcessing = ref(false)
+
+onBeforeMount(async() => {
+  if(userStore.checkout.length < 1) {
+    return navigateTo('/shopping-cart')
+  }
+
+  total.value = 0.00
+
+  if(user.value){
+    currentAddress.value = await useFetch(`/api/prisma/get-address-by-user/${user.value.id}`)
+    setTimeout(() => userStore.isLoading = false, 200)
+  }
+})
+
+watchEffect(() => {
+  if(route.fullPath == '/checkout' && !user.value){
+    return navigateTo('/auth')
+  }
+})
 
 onMounted(() => {
   isProcessing.value = true
@@ -139,10 +160,10 @@ const showError = async (errorMsgText) => {
 
 }
 
-const products = [
-    {id: 1, title: "Title 1", description: "This is description", url: "https://picsum.photos/id/70/800/800", price: 9899},
-    {id: 2, title: "Title 2", description: "This is description", url: "https://picsum.photos/id/71/800/800", price: 9899}
-]
+// const products = [
+//     {id: 1, title: "Title 1", description: "This is description", url: "https://picsum.photos/id/70/800/800", price: 9899},
+//     {id: 2, title: "Title 2", description: "This is description", url: "https://picsum.photos/id/71/800/800", price: 9899}
+// ]
 </script>
 
 <style scoped>
