@@ -45,7 +45,7 @@
           </div>
 
           <div id="Items" class="bg-white rounded-lg p-4 mt-4">
-            <div v-for="product in products" :key="product.id">
+            <div v-for="product in userStore.checkout" :key="product.id">
               <CheckoutItem :product="product" />
             </div>
           </div>

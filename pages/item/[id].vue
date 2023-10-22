@@ -67,9 +67,10 @@
 
 <script setup>
 import MainLayout from '~/layouts/MainLayout.vue'
-import{ref} from 'vue';
+import{ref, computed} from 'vue';
 import {useUserStore} from '~/store/user'
 const userStore = useUserStore()
+const user = useSupabaseUser()
 
 const route = useRoute();
 
@@ -102,7 +103,7 @@ onBeforeMount(async () => {
 const isInCart = computed(() => {
   let res = false
   userStore.cart.forEach(prod => {
-    if(route.params.id === prod.id){
+    if(route.params.id == prod.id){
       res = true
     }
   })
@@ -127,7 +128,11 @@ const images = ref([
 ])
 
 const addToCart = () => {
-  userStore.cart.push(product.value.data)
+  if(!user){
+    return navigateTo('/auth')
+  }else{
+    userStore.cart.push(product.value.data)
+  }
 }
 </script>
 
