@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  mode: 'universal',
   pages: true,
   modules: [
     'nuxt-icon',
@@ -17,8 +18,8 @@ export default defineNuxtConfig({
   app: {
     head: {
       script: [
-        {src: 'https://js.stripe.com/v3/', defer: true}
-      ]
+        { src: 'https://js.stripe.com/v3/', defer: true }
+      ],
     }
   },
   supabase: {
@@ -26,6 +27,10 @@ export default defineNuxtConfig({
       login: '/auth',
       callback: '/'
     }
+  },
+  routes: {
+    '/': { prerender: true },
+    '/*': { cors: true },
   }
  
 })
